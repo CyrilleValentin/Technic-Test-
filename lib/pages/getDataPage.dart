@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:test_app/configs/constants/constant.dart';
+import 'package:test_app/database/db.dart';
+import 'package:test_app/models/user.dart';
+import 'package:toastification/toastification.dart';
 
 class GetDataPage extends StatefulWidget {
   const GetDataPage({super.key});
@@ -12,6 +16,7 @@ class GetDataPage extends StatefulWidget {
 class _GetDataPageState extends State<GetDataPage> {
   List<dynamic> _users = [];
   bool _isLoading = false;
+  DatabaseService databaseHelper = DatabaseService();
 
   @override
   void initState() {
@@ -25,12 +30,23 @@ class _GetDataPageState extends State<GetDataPage> {
         _isLoading = false;
       });
     }).catchError((error) {
+      // ignore: avoid_print
       print(error);
       setState(() {
         _isLoading = false;
       });
     });
   }
+
+
+ void saveUserData(userData) async {
+    UserModel user = UserModel.fromJson(userData);
+    DatabaseService helper = DatabaseService();
+    await helper.insertUser(user);
+    print('User data saved successfully!');
+  }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +101,14 @@ class _GetDataPageState extends State<GetDataPage> {
                         Text(
                           "${user['name']['first']} ${user['name']['last']}",
                           style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              user['location']['city'],
+                              '${user['dob']['age']} years old',
                               style: const TextStyle(
                                 fontSize: 12,
                               ),
@@ -100,7 +116,7 @@ class _GetDataPageState extends State<GetDataPage> {
                             Text(
                               user['location']['country'],
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                               ),
                             ),
                           ],
@@ -110,12 +126,16 @@ class _GetDataPageState extends State<GetDataPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 4),
                             child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Icon(Icons.save_alt,color: Colors.black45,),
+                              onPressed: () async {
+                              saveUserData(user);
+                              },
+                              child: const Icon(
+                                Icons.save_alt,
+                                color: Colors.black45,
+                              ),
                             ),
                           ),
                         ),
-                        
                       ],
                     ));
               }),
@@ -128,14 +148,19 @@ class _GetDataPageState extends State<GetDataPage> {
 }
 
 Future<List<dynamic>> fetchUsers() async {
-  final response =
-      await http.get(Uri.parse('https://randomuser.me/api/?results=12'));
+  final response = await http.get(Uri.parse(urlApi));
 
   if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
     final users = json['results'];
     return users;
   } else {
+    toastification.show(
+      type: ToastificationType.error,
+      style: ToastificationStyle.flatColored,
+      title: const Text('Failed to load users check your network'),
+      autoCloseDuration: const Duration(seconds: 5),
+    );
     throw Exception('Failed to load users');
   }
 }
