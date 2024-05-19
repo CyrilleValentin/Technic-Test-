@@ -1,7 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:test_app/configs/routes/navigator.dart';
 import 'package:test_app/database/db.dart';
+import 'package:test_app/pages/update.dart';
 import 'package:toastification/toastification.dart';
 
 class SavedPage extends StatefulWidget {
@@ -194,6 +196,7 @@ class _SavedPageState extends State<SavedPage> {
                               ],
                               onSelected: (value) {
                                 if (value == 'edit') {
+                                  navigatorSimple(context, Update(data: user));
                                 } else {
                                   databaseHelper.deleteUser('${user['email']}');
                                   loadUser();
