@@ -30,11 +30,15 @@ cd Technic-Test && flutter packages get
 .env
 
     baseUrl=
+
 ```
 #### 3. Execution
 ```bash
 # run the project
  flutter run
 ```
-#### 4. Screenshots 
-  
+
+## Screenshots 
+  ![WhatsApp Image 2024-05-20 at 18 40 50_706719e8](https://github.com/CyrilleValentin/Technic-Test-/assets/105164707/efac4923-5130-42e0-9427-bca7da2c6c1d)
+  ![WhatsApp Image 2024-05-20 at 18 40 52_060be289](https://github.com/CyrilleValentin/Technic-Test-/assets/105164707/b88e5a43-5fd8-431c-825b-2c2827bdafc0)
+ 
