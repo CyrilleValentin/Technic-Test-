@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: currentIndex == 0 ? const GetDataPage() : const SavedPage(),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFFE8EDDF),
         items:  [
           BottomNavigationBarItem(icon: Image.asset(ic1,width: 20,height: 20,),backgroundColor: Colors.black87, activeIcon: Image.asset(ic2,width: 20,height: 20,), label: "Api Data"),
           BottomNavigationBarItem(icon:  Image.asset(ic3,width: 20,height: 20,),backgroundColor: Colors.black87,activeIcon: Image.asset(ic4,width: 20,height: 20,), label: "DB Data"),

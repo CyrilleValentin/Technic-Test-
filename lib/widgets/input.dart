@@ -22,7 +22,7 @@ Widget myInput({
         borderRadius: BorderRadius.circular(10),
       ),
       filled: true,
-      fillColor: Colors.white,
+      fillColor:const Color(0xFFD2D2EB),
       errorStyle: const TextStyle(
         color: Colors.red,
         fontSize: 12,

@@ -50,6 +50,12 @@ class _GetDataPageState extends State<GetDataPage> {
     DatabaseService helper = DatabaseService();
     await helper.insertUser(user);
     print('User data saved successfully!');
+    toastification.show(
+      type: ToastificationType.success,
+      style: ToastificationStyle.flatColored,
+      title: const Text('User data saved successfully!'),
+      autoCloseDuration: const Duration(seconds: 3),
+    );
   }
 
   @override
@@ -59,111 +65,120 @@ class _GetDataPageState extends State<GetDataPage> {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Scaffold(
-        backgroundColor: Colors.white54,
-        body: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: RefreshIndicator(
-              onRefresh: () {
-                return fetchUsers().then((users) {
-                  setState(() {
-                    _users = users;
-                    _isLoading = false;
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Test App'),
+            centerTitle: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+                bottom: Radius.circular(20),
+              ),
+            ),
+          ),
+          backgroundColor: const Color(0xFFD2D2EB),
+          body: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: RefreshIndicator(
+                onRefresh: () {
+                  return fetchUsers().then((users) {
+                    setState(() {
+                      _users = users;
+                      _isLoading = false;
+                    });
+                  }).catchError((error) {
+                    toastification.show(
+                        type: ToastificationType.error,
+                        style: ToastificationStyle.flatColored,
+                        title: const Text(
+                            'Failed to load users check your network'),
+                        closeOnClick: true,
+                        showProgressBar: false);
+                    print(error);
+                    setState(() {
+                      _isLoading = true;
+                    });
                   });
-                }).catchError((error) {
-                  toastification.show(
-                      type: ToastificationType.error,
-                      style: ToastificationStyle.flatColored,
-                      title:
-                          const Text('Failed to load users check your network'),
-                      closeOnClick: true,
-                      showProgressBar: false);
-                  print(error);
-                  setState(() {
-                    _isLoading = true;
-                  });
-                });
-              },
-              child: GridView.count(
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                crossAxisCount: 2,
-                children: List.generate(_users.length, (index) {
-                  final user = _users[index];
-                  return Container(
-                      width: 40,
-                      height: 80,
-                      decoration: BoxDecoration(
+                },
+                child: GridView.count(
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  crossAxisCount: 2,
+                  children: List.generate(_users.length, (index) {
+                    final user = _users[index];
+                    return Container(
+                        width: 40,
+                        height: 80,
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                offset: const Offset(0, 3),
-                                blurRadius: 10)
-                          ]),
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          user['picture']['thumbnail']),
-                                    ),
-                                  ))),
-                          const SizedBox(height: 8),
-                          Text(
-                            "${user['name']['first']} ${user['name']['last']}",
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                '${user['dob']['age']} years old',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            user['picture']['thumbnail']),
+                                      ),
+                                    ))),
+                            const SizedBox(height: 8),
+                            Text(
+                              "${user['name']['first']} ${user['name']['last']}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF1C5588),
                               ),
-                              Text(
-                                user['location']['country'],
-                                style: const TextStyle(
-                                  fontSize: 12,
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  user['location']['country'],
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 4),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  saveUserData(user);
-                                },
-                                child: const Icon(
-                                  Icons.save_alt,
-                                  color: Colors.black45,
+                                Text(
+                                  '${user['dob']['age']} years old',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    saveUserData(user);
+                                  },
+                                  child: const Icon(
+                                    Icons.save_alt,
+                                    color: Colors.black45,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ));
-                }),
+                          ],
+                        ));
+                  }),
+                ),
               ),
             ),
           ),

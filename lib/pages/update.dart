@@ -59,10 +59,7 @@ void updateUser() {
         widget.data.containsKey('country') &&
         widget.data.containsKey('email') &&
         widget.data.containsKey('phone')) {
-      // Initialisez un objet UserModel avec les valeurs actuelles de widget.data
       UserModel user = UserModel.fromJson(widget.data);
-
-      // Mettez à jour les champs de l'objet UserModel avec les valeurs des TextEditingControllers
       user.gender = _gender.text;
       user.firstName = _firstName.text;
       user.lastName = _lastName.text;
@@ -71,7 +68,6 @@ void updateUser() {
       user.email = _email.text;
       user.phone = _phone.text;
 
-      // Appelez la fonction updateUser avec l'objet UserModel mis à jour comme argument
       DatabaseService().updateUser(user);
     } else {
       print('Certaines clés nécessaires sont manquantes dans les données de l\'utilisateur.');
@@ -85,19 +81,20 @@ void updateUser() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFD2D2EB),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 60),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 180,
                 child: Column(
                   children: [
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: 150,
+                      height: 150,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage('${widget.data['pictureThumbnail']}'),
@@ -158,12 +155,6 @@ void updateUser() {
                       SizedBox(
                         width: 150,
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          ),
                           onPressed: () {
                           updateUser();
                           navigatorDelete(context, const SavedPage());

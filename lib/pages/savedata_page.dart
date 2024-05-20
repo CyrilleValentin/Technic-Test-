@@ -60,7 +60,7 @@ class _SavedPageState extends State<SavedPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white54,
+        backgroundColor: const Color(0xFFD2D2EB),
         body: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
@@ -68,7 +68,7 @@ class _SavedPageState extends State<SavedPage> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 70,
-                color: Colors.white54,
+                color: const Color(0xFFD2D2EB),
                 child: TextFormField(
                     textAlignVertical: TextAlignVertical.center,
                     controller: _search,
@@ -81,7 +81,7 @@ class _SavedPageState extends State<SavedPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: const Color(0xFFD2D2EB),
                     ),
                     onChanged: (value) {
                       _filterUsers(value);
@@ -100,14 +100,7 @@ class _SavedPageState extends State<SavedPage> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  offset: const Offset(0, 3),
-                                  blurRadius: 10,
-                                ),
-                              ],
+                              
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,8 +121,9 @@ class _SavedPageState extends State<SavedPage> {
                                       Text(
                                         '${user['firstName']} ${user['lastName']}',
                                         style: const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold,
+                                           color: Color(0xFF1C5588),
                                         ),
                                       ),
                                       const SizedBox(height: 8),
@@ -145,7 +139,7 @@ class _SavedPageState extends State<SavedPage> {
                                           Text(
                                             '${user['country']}',
                                             style:
-                                                const TextStyle(fontSize: 12),
+                                                const TextStyle(fontSize: 10),
                                           ),
                                         ],
                                       ),
