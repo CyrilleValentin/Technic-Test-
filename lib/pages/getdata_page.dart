@@ -119,7 +119,9 @@ class _GetDataPageState extends State<GetDataPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            
                             Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -157,24 +159,18 @@ class _GetDataPageState extends State<GetDataPage> {
                                   style: const TextStyle(
                                     fontSize: 12,
                                   ),
-                                )
+                                ),
                               ],
                             ),
-                            const SizedBox(height: 8),
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 4),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      fixedSize: MaterialStateProperty.all(const Size(100, 40)),
-                                          ),
-                                  onPressed: () async {
-                                    saveUserData(user);
-                                  },
-                                  child: const Icon(
-                                    Icons.save_alt,
-                                  ),
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.save_alt,
+                                  color:  Color(0xFF8CACD3),
                                 ),
+                                onPressed: () {
+                                  saveUserData(user);
+                                },
                               ),
                             ),
                           ],
