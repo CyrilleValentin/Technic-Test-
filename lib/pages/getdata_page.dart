@@ -169,8 +169,7 @@ class _GetDataPageState extends State<GetDataPage> {
                                     saveUserData(user);
                                   },
                                   child: const Icon(
-                                    Icons.save_alt,
-                                    color: Colors.black45,
+                                    Icons.save_alt,                                   
                                   ),
                                 ),
                               ),

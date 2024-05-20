@@ -1,10 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:test_app/configs/routes/navigator.dart';
 import 'package:test_app/database/db.dart';
 import 'package:test_app/models/user.dart';
-import 'package:test_app/pages/savedata_page.dart';
 import 'package:test_app/widgets/input.dart';
 
 class Update extends StatefulWidget {
@@ -24,7 +22,7 @@ class _UpdateState extends State<Update> {
   late TextEditingController _country;
   late TextEditingController _email;
   late TextEditingController _phone;
-
+ final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -50,7 +48,6 @@ class _UpdateState extends State<Update> {
   }
 
 void updateUser() {
-  
   if (widget.data != null && widget.data.isNotEmpty) {
     if (widget.data.containsKey('gender') &&
         widget.data.containsKey('lastName') &&
@@ -67,7 +64,6 @@ void updateUser() {
       user.country = _country.text;
       user.email = _email.text;
       user.phone = _phone.text;
-
       DatabaseService().updateUser(user);
     } else {
       print('Certaines clés nécessaires sont manquantes dans les données de l\'utilisateur.');
@@ -77,96 +73,105 @@ void updateUser() {
   }
 }
 
+void _submitForm() async {
+    if (formkey.currentState!.validate()) {
+      
+      updateUser();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFD2D2EB),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 60),
-          child: Column(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 180,
-                child: Column(
-                  children: [
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage('${widget.data['pictureThumbnail']}'),
-                          fit: BoxFit.fill,
-                        ),
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 240, // Adjust the height as needed
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xFFD2D2EB),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                SizedBox(
                   child: Column(
                     children: [
-                      myInput(
-                        controller: _lastName,
-                        prefixText: 'LastName: ',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(
-                        controller: _firstName,
-                        prefixText: 'FirstName: ',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(controller: _gender, prefixText: "Gender: "),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(
-                        controller: _email,
-                        prefixText: "Email: ",
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(controller: _city, prefixText: "City: "),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(controller: _country, prefixText: "Country: "),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      myInput(controller: _phone, prefixText: "Phone: ", keyboardType: TextInputType.phone),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
+                      Container(
                         width: 150,
-                        child: ElevatedButton(
-                          onPressed: () {
-                          updateUser();
-                          navigatorDelete(context, const SavedPage());
-                          },
-                          child: const Text('Update'),
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage('${widget.data['pictureThumbnail']}'),
+                            fit: BoxFit.fill,
+                          ),
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
-            ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height - 240, // Adjust the height as needed
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Form(
+                      key: formkey,
+                      child: Column(
+                        children: [
+                          myInput(
+                            controller: _lastName,
+                            prefixText: 'LastName: ',
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(
+                            controller: _firstName,
+                            prefixText: 'FirstName: ',
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(controller: _gender, prefixText: "Gender: "),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(
+                            controller: _email,
+                            prefixText: "Email: ",
+                            keyboardType: TextInputType.emailAddress,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(controller: _city, prefixText: "City: "),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(controller: _country, prefixText: "Country: "),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          myInput(controller: _phone, prefixText: "Phone: ", keyboardType: TextInputType.phone),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: ElevatedButton(
+                              onPressed: () {
+                              _submitForm();
+                              },
+                              child: const Text('Update'),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const String homeRoute = "/home";
 const String savedRoute = "/home";
-String urlApi = '${dotenv.env['baseUrl']}/?results=10';
+String urlApi = '${dotenv.env['baseUrl']}/?results=100';
 
 //icons
 const String ic1 = "assets/icons/icapemp.png";
