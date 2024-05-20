@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 Widget myInput({
   bool obscureText = false,
   Widget? suffixIcon,
+  Widget? prefixIcon,
   TextInputType? keyboardType,
-  required String prefixText,
+   required String prefixText,
   required TextEditingController controller,
   String? Function(String?)? validator,
   void Function(String?)? onSaved,
@@ -16,6 +17,7 @@ Widget myInput({
       contentPadding: const EdgeInsets.all(12),
       prefixText: prefixText,
       suffixIcon: suffixIcon,
+      prefixIcon: prefixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
       ),

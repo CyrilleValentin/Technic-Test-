@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:test_app/configs/routes/route.dart';
 import 'package:test_app/database/db.dart';
-import 'package:test_app/pages/homePage.dart';
+import 'package:test_app/pages/home_page.dart';
 import 'package:toastification/toastification.dart';
 
 Future<void> main() async {

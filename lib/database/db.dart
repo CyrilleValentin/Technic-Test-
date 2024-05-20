@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: avoid_print
+
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:test_app/models/user.dart';
@@ -70,6 +72,19 @@ class DatabaseService {
   }
 
 
+
+  Future<void> updateUser(UserModel user) async {
+  final Database db = await database;
+  await db.update(
+    'users',
+    user.toJson(),
+    where: 'email = ?',
+    whereArgs: [user.email],
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
+
+
   Future<void> deleteUser(String email) async {
   final Database db = await database;
   await db.delete('users', where: 'email = ?', whereArgs: [email]);
@@ -81,9 +96,6 @@ Future<List<dynamic>> loadUser() async {
   final List<Map<String, dynamic>> data = await db.query('users');
   return data.cast<dynamic>();
 }
-
-
-
   Future<void> displayTableStructure() async {
     final Database db = await database;
     List<Map<String, dynamic>>? columns = await db.query('users', limit: 0);

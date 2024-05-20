@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/configs/constants/constant.dart';
-import 'package:test_app/pages/getDataPage.dart';
-import 'package:test_app/pages/saveDataPage.dart';
+import 'package:test_app/pages/getdata_page.dart';
+import 'package:test_app/pages/savedata_page.dart';
 
 
 class HomePage extends StatefulWidget {
