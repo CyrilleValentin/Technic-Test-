@@ -1,16 +1,40 @@
 # test_app
+Application from scratch to be able to display data from an API.
 
-A new Flutter project.
+The application must be created in Flutter and must be able to:
 
-## Getting Started
+· Retrieve data from the following API : [Attached is the API documentation]:(https://randomuser.me/documentation#howto)
 
-This project is a starting point for a Flutter application.
+· Create an SQLite database within the application to store data
 
-A few resources to get you started if this is your first Flutter project:
+· Display each data in dynamic cards
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+· Delete, modify and add data. (Form for addition and modification)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+· Create a search bar to be able to filter the cards
+
+## Get Started
+#### 1. Clone and Install
+
+```bash
+# Clone the repo
+git clone https://github.com/CyrilleValentin/Technic-Test-.git
+
+# Navigate to clonned folder and Install dependencies
+cd Technic-Test && flutter packages get
+```
+#### 2. Set .env file
+
+```bash
+# Rename .env.example file to .env  and set baseUrl value
+.env
+
+    baseUrl=
+```
+#### 3. Execution
+```bash
+# run the project
+ flutter run
+```
+#### 4. Screenshots 
+  
