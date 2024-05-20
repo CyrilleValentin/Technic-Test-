@@ -47,6 +47,15 @@ class _SavedPageState extends State<SavedPage> {
         _filteredUsers = users;
         _isLoading = false;
       });
+      print(_allUsers);
+      if (_allUsers.isEmpty) {
+        toastification.show(
+            type: ToastificationType.warning,
+            style: ToastificationStyle.flatColored,
+            title: const Text('No records yet!1'),
+            closeOnClick: true,
+            showProgressBar: false);
+      }
       print('User data fetched successfully!');
     } catch (error) {
       print(error);
@@ -96,11 +105,11 @@ class _SavedPageState extends State<SavedPage> {
                         crossAxisCount: 2,
                         children: List.generate(_filteredUsers.length, (index) {
                           final user = _filteredUsers[index];
+
                           return Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +132,7 @@ class _SavedPageState extends State<SavedPage> {
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                           color: Color(0xFF1C5588),
+                                          color: Color(0xFF1C5588),
                                         ),
                                       ),
                                       const SizedBox(height: 8),

@@ -165,11 +165,14 @@ class _GetDataPageState extends State<GetDataPage> {
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 4),
                                 child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      fixedSize: MaterialStateProperty.all(const Size(100, 40)),
+                                          ),
                                   onPressed: () async {
                                     saveUserData(user);
                                   },
                                   child: const Icon(
-                                    Icons.save_alt,                                   
+                                    Icons.save_alt,
                                   ),
                                 ),
                               ),
